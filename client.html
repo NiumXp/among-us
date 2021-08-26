@@ -1,0 +1,25 @@
+<script>
+    const ws = new WebSocket("ws://localhost:8080/ws");
+
+    ws.addEventListener("open", onOpen);
+    ws.addEventListener("close", onClose);
+    ws.addEventListener("error", onError);
+    ws.addEventListener("message", onMessage);
+
+    async function onOpen(data) {
+        console.log(data);
+        console.log(ws.send("teste"))
+    };
+
+    async function onClose(data) {
+        console.log("Close", data);
+    };
+    async function onError(data) {
+        console.log("Erro", data);
+    };
+
+    async function onMessage(data) {
+        console.log(data);
+    };
+    
+</script>
