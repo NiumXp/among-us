@@ -1,11 +1,6 @@
-import aiohttp
+from .server import Server
 
-import ws
-import web
+server = Server()
 
-app = aiohttp.web.Application()
-
-app.add_routes(ws .routes)
-app.add_routes(web.routes)
-
-aiohttp.web.run_app(app)
+server.setup()
+server.run()
