@@ -1,4 +1,5 @@
 import asyncio
+import collections
 import typing as t
 
 
@@ -51,15 +52,18 @@ class Node:
 
 class Connection:
     def __init__(self) -> None:
-        self._listeners = []
+        self._fs = collections.defaultdict(list)
 
     def dispatch(self, event: str, data: t.Dict[str, t.Any]):
-        pass
+        fs = self._fs
+
+        for f in fs:
+            fs.done(data)
+
+        fs.clear()
 
     def wait_for(self, event: str, *, timeout: int = 5):
         future = asyncio.Future()
-        listener = (event, future)
-
-        self._listeners.append(listener)
+        self._fs[event].append(future)
 
         return asyncio.wait_for(future, timeout=timeout)
